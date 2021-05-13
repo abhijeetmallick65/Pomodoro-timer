@@ -8,13 +8,8 @@ const changeDefault = document.querySelector(".changeDefault");
 const defaultVal = document.getElementById("default");
 const Heading = document.querySelector(".Heading");
 
-let timerValDefault,
-  myVar2,
-  myVar,
-  time,
-  temp,
-  highest,
-  count = 0;
+let timerValDefault, myVar2, myVar, time, temp, highest, color;
+count = 0;
 
 if (localStorage.getItem("default")) {
   timerValDefault = localStorage.getItem("default");
@@ -50,6 +45,7 @@ function removeTimers() {
   containValueval.classList.remove("running");
   timerValDefault = localStorage.getItem("default");
   containValueval.textContent = timerValDefault;
+  count = 0;
   // localStorage.removeItem("test1");
 }
 
@@ -77,7 +73,7 @@ function myfunc() {
     removeTimers();
   }
   containValueval.textContent = time;
-  document.body.style.backgroundImage = `linear-gradient(102.1deg, #0E1E25 ${Math.round(
+  document.body.style.backgroundImage = `linear-gradient(102.1deg, ${color} ${Math.round(
     (count / temp) * 100
   )}%,white ${100 - Math.round((count / temp) * 100)}%)`;
   console.log(Math.round((temp / count) * 100));
@@ -89,6 +85,7 @@ function runtimer(checkTime = 0) {
   // } else {
   //   time = parseInt(containValueval.textContent);
   // }
+  color = getRandomColor();
   time = parseInt(containValueval.textContent);
   temp = time;
   myVar = setTimeout(timeoutFunc, time * 1000);

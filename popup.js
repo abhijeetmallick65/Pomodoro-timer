@@ -46,6 +46,7 @@ function removeTimers() {
   timerValDefault = localStorage.getItem("default");
   containValueval.textContent = timerValDefault;
   count = 0;
+  Heading.textContent = "Default Timer";
   // localStorage.removeItem("test1");
 }
 

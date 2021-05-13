@@ -70,14 +70,14 @@ function myfunc() {
   if (time <= 0) {
     time = parseInt(localStorage.getItem("default"));
     containValueval.textContent = time;
-    findHighest(temp);
+    findHighest(Math.ceil(temp / 60));
     removeTimers();
   }
-  containValueval.textContent = time;
+  containValueval.textContent = Math.ceil(time / 60);
   document.body.style.backgroundImage = `linear-gradient(102.1deg, ${color} ${Math.round(
     (count / temp) * 100
   )}%,white ${100 - Math.round((count / temp) * 100)}%)`;
-  console.log(Math.round((temp / count) * 100));
+  // console.log(Math.round((count / temp) * 100));
 }
 //   runtimer
 function runtimer(checkTime = 0) {
@@ -87,7 +87,7 @@ function runtimer(checkTime = 0) {
   //   time = parseInt(containValueval.textContent);
   // }
   color = getRandomColor();
-  time = parseInt(containValueval.textContent);
+  time = parseInt(containValueval.textContent) * 60;
   temp = time;
   myVar = setTimeout(timeoutFunc, time * 1000);
   myVar2 = setInterval(myfunc, 1000);

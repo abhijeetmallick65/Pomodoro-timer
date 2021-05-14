@@ -8,7 +8,14 @@ const changeDefault = document.querySelector(".changeDefault");
 const defaultVal = document.getElementById("default");
 const Heading = document.querySelector(".Heading");
 
-let timerValDefault, myVar2, myVar, time, temp, highest, color;
+let timerValDefault,
+  myVar2,
+  myVar,
+  time,
+  temp,
+  highest,
+  color,
+  sec = 60;
 count = 0;
 
 if (localStorage.getItem("default")) {
@@ -17,7 +24,7 @@ if (localStorage.getItem("default")) {
   localStorage.setItem("default", 25);
   timerValDefault = 25;
 }
-containValueval.textContent = timerValDefault;
+containValueval.textContent = `${timerValDefault}:00`;
 
 //set highest focus time
 highest = localStorage.getItem("highest") ? localStorage.getItem("highest") : 0;
@@ -44,8 +51,9 @@ function removeTimers() {
   clearInterval(myVar2);
   containValueval.classList.remove("running");
   timerValDefault = localStorage.getItem("default");
-  containValueval.textContent = timerValDefault;
+  containValueval.textContent = `${timerValDefault}:00`;
   count = 0;
+  sec = 60;
   Heading.textContent = "Default Timer";
   // localStorage.removeItem("test1");
 }
@@ -66,18 +74,27 @@ function getRandomColor() {
 function myfunc() {
   time -= 1;
   count++;
+  sec = sec <= 0 ? 60 : sec;
+  sec--;
+
+  containValueval.textContent = `${
+    Math.floor(time / 60) < 10
+      ? "0" + Math.floor(time / 60)
+      : Math.floor(time / 60)
+  }:${sec < 10 ? "0" + sec : sec}`;
+
   // localStorage.setItem("test1", time);
   if (time <= 0) {
     time = parseInt(localStorage.getItem("default"));
-    containValueval.textContent = time;
-    findHighest(Math.ceil(temp / 60));
+    sec = 60;
+    containValueval.textContent = `${time}:00`;
+    findHighest(Math.round(temp / 60));
     removeTimers();
   }
-  containValueval.textContent = Math.ceil(time / 60);
+
   document.body.style.backgroundImage = `linear-gradient(102.1deg, ${color} ${Math.round(
     (count / temp) * 100
   )}%,white ${100 - Math.round((count / temp) * 100)}%)`;
-  // console.log(Math.round((count / temp) * 100));
 }
 //   runtimer
 function runtimer(checkTime = 0) {
@@ -87,6 +104,11 @@ function runtimer(checkTime = 0) {
   //   time = parseInt(containValueval.textContent);
   // }
   color = getRandomColor();
+  const c1 = getRandomColor();
+  const c2 = getRandomColor();
+  document.querySelector(
+    ".container"
+  ).style.backgroundImage = `linear-gradient(315deg, ${c1} 0%, ${c2} 74%)`;
   time = parseInt(containValueval.textContent) * 60;
   temp = time;
   myVar = setTimeout(timeoutFunc, time * 1000);
@@ -108,7 +130,7 @@ setCustom.addEventListener("submit", (e) => {
   e.preventDefault();
   console.log(e.target.querySelector("#custom"));
   const val = e.target.querySelector("#custom").value;
-  containValueval.textContent = val;
+  containValueval.textContent = `${val}:00`;
   custom.value = "";
   Heading.textContent = "Custom Timer";
 });
@@ -119,7 +141,7 @@ changeDefault.addEventListener("submit", (e) => {
   timerValDefault = e.target.querySelector("#default").value;
   localStorage.setItem("default", timerValDefault);
   defaultVal.value = "";
-  containValueval.textContent = timerValDefault;
+  containValueval.textContent = `${timerValDefault}:00`;
   Heading.textContent = "Default Timer";
   removeTimers();
 });

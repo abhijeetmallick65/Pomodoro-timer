@@ -128,12 +128,12 @@ timerValue.addEventListener("click", function (e) {
 // set custom timer
 setCustom.addEventListener("submit", (e) => {
   e.preventDefault();
+  removeTimers();
   console.log(e.target.querySelector("#custom"));
   const val = e.target.querySelector("#custom").value;
   containValueval.textContent = `${val}:00`;
   custom.value = "";
   Heading.textContent = "Custom Timer";
-  removeTimers();
 });
 
 // default timer

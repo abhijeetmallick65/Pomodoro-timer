@@ -133,6 +133,7 @@ setCustom.addEventListener("submit", (e) => {
   containValueval.textContent = `${val}:00`;
   custom.value = "";
   Heading.textContent = "Custom Timer";
+  removeTimers();
 });
 
 // default timer
